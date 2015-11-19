@@ -31,6 +31,6 @@ public class MainPresenterImpl implements MainPresenter, OnLoadTopicListener {
 
     @Override
     public void onLoadTopicFailed() {
-
+        this.mainView.loadFailed();
     }
 }

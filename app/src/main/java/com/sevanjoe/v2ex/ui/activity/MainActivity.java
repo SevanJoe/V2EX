@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -19,12 +21,23 @@ import com.sevanjoe.v2ex.R;
 import com.sevanjoe.v2ex.bean.Topic;
 import com.sevanjoe.v2ex.presenter.MainPresenter;
 import com.sevanjoe.v2ex.presenter.impl.MainPresenterImpl;
+import com.sevanjoe.v2ex.ui.adapter.TopicAdapter;
 import com.sevanjoe.v2ex.ui.view.MainView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
 
     private MainPresenter mainPresenter;
+
+    private RecyclerView recyclerView;
+    private TopicAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private List<Topic> topicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +65,22 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         initView();
+        initPresenter();
     }
 
     private void initView() {
+        recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        topicList = new ArrayList<>();
+        adapter = new TopicAdapter(topicList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void initPresenter() {
         mainPresenter = new MainPresenterImpl(this);
         mainPresenter.showHotTopics();
     }
@@ -118,9 +144,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showHotTopics(Topic[] topics) {
-        for (Topic topic : topics) {
-            Log.d("Topic", topic.getTitle());
-        }
+        Collections.addAll(topicList, topics);
+        adapter.setTopicList(topicList);
     }
 
     @Override
