@@ -14,14 +14,14 @@ public class NetworkManager {
 
     private RequestQueue requestQueue;
 
+    private NetworkManager() {
+    }
+
     public static NetworkManager getInstance() {
         if (ourInstance == null) {
             ourInstance = new NetworkManager();
         }
         return ourInstance;
-    }
-
-    private NetworkManager() {
     }
 
     public void init(Context context) {

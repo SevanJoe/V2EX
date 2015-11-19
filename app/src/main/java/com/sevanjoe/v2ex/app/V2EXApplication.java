@@ -1,4 +1,4 @@
-package com.sevanjoe.v2ex;
+package com.sevanjoe.v2ex.app;
 
 import android.app.Application;
 
