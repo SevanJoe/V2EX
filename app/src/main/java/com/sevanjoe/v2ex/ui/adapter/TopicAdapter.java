@@ -11,6 +11,9 @@ import com.sevanjoe.v2ex.bean.Topic;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Sevan on 2015/11/19.
  */
@@ -45,11 +48,12 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        @Bind(R.id.topic_item_title)
+        TextView textView;
 
         public ViewHolder(View view) {
             super(view);
-            this.textView = (TextView) view.findViewById(R.id.topic_item_title);
+            ButterKnife.bind(this, view);
         }
     }
 }
