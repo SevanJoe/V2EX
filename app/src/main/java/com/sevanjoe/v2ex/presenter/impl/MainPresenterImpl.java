@@ -20,12 +20,13 @@ public class MainPresenterImpl implements MainPresenter, OnLoadTopicListener {
     }
 
     @Override
-    public void showHotTopics() {
+    public void loadHotTopics() {
         this.topicModel.loadHotTopics(this);
     }
 
     @Override
     public void onLoadTopicSuccess(Topic[] topics) {
+        this.mainView.loadSuccess();
         this.mainView.showHotTopics(topics);
     }
 

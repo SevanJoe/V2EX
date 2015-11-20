@@ -8,5 +8,7 @@ import com.sevanjoe.v2ex.bean.Topic;
 public interface MainView {
     void showHotTopics(Topic[] topics);
 
+    void loadSuccess();
+
     void loadFailed();
 }

@@ -1,11 +1,13 @@
 package com.sevanjoe.v2ex.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.sevanjoe.v2ex.R;
 import com.sevanjoe.v2ex.bean.Topic;
@@ -31,7 +32,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView {
+        implements NavigationView.OnNavigationItemSelectedListener, MainView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.nav_view)
     NavigationView navigationView;
 
+    @Bind(R.id.main_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.main_recycler_view)
     RecyclerView recyclerView;
 
@@ -88,6 +91,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initMainView() {
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
@@ -100,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initPresenter() {
         mainPresenter = new MainPresenterImpl(this);
-        mainPresenter.showHotTopics();
+        mainPresenter.loadHotTopics();
     }
 
     @Override
@@ -167,7 +174,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void loadSuccess() {
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        Snackbar.make(swipeRefreshLayout, "Load Success", Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void loadFailed() {
-        Toast.makeText(this, R.string.load_failed, Toast.LENGTH_LONG).show();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        Snackbar.make(swipeRefreshLayout, R.string.load_failed, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mainPresenter.loadHotTopics();
+            }
+        });
     }
 }
