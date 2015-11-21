@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.sevanjoe.v2ex.R;
 import com.sevanjoe.v2ex.bean.Topic;
+import com.sevanjoe.v2ex.network.NetworkManager;
+import com.sevanjoe.v2ex.network.NetworkUtils;
 
 import java.util.List;
 
@@ -39,6 +42,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.avatarImageView.setImageUrl(NetworkUtils.getImageUrl(topicList.get(position).getMember().getAvatar_normal()),
+                NetworkManager.getInstance().getImageLoader());
         holder.textView.setText(topicList.get(position).getTitle());
     }
 
@@ -48,6 +53,9 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.topic_item_avatar)
+        NetworkImageView avatarImageView;
+
         @Bind(R.id.topic_item_title)
         TextView textView;
 

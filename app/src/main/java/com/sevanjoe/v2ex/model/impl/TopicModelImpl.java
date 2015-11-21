@@ -5,7 +5,7 @@ import com.android.volley.VolleyError;
 import com.sevanjoe.v2ex.bean.Topic;
 import com.sevanjoe.v2ex.model.TopicModel;
 import com.sevanjoe.v2ex.network.GsonRequest;
-import com.sevanjoe.v2ex.network.NetworkConstants;
+import com.sevanjoe.v2ex.network.NetworkApis;
 import com.sevanjoe.v2ex.network.NetworkManager;
 import com.sevanjoe.v2ex.network.NetworkUtils;
 import com.sevanjoe.v2ex.presenter.OnLoadTopicListener;
@@ -16,7 +16,7 @@ import com.sevanjoe.v2ex.presenter.OnLoadTopicListener;
 public class TopicModelImpl implements TopicModel {
     @Override
     public void loadHotTopics(final OnLoadTopicListener onLoadTopicListener) {
-        GsonRequest<Topic[]> gsonRequest = new GsonRequest<>(NetworkUtils.getUrl(NetworkConstants.TOPICS_HOT),
+        GsonRequest<Topic[]> gsonRequest = new GsonRequest<>(NetworkUtils.getUrl(NetworkApis.TOPICS_HOT),
                 Topic[].class, null, new Response.Listener<Topic[]>() {
             @Override
             public void onResponse(Topic[] response) {

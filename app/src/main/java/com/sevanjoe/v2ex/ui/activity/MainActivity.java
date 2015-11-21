@@ -107,7 +107,14 @@ public class MainActivity extends AppCompatActivity
 
     private void initPresenter() {
         mainPresenter = new MainPresenterImpl(this);
-        mainPresenter.loadHotTopics();
+
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                mainPresenter.loadHotTopics();
+            }
+        });
     }
 
     @Override
