@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showHotTopics(Topic[] topics) {
+        topicList.clear();
         Collections.addAll(topicList, topics);
         adapter.setTopicList(topicList);
     }

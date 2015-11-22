@@ -1,33 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_marginBottom="10dp">
+    android:id="@+id/topic_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/topic_item"
-        android:layout_gravity="center"
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/topic_item_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        card_view:cardElevation="4dp"
-        card_view:cardCornerRadius="4dp">
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/topic_item_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/topic_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="80dp"
-            android:textSize="16sp"/>
-    </android.support.v7.widget.CardView>
+            android:layout_marginBottom="10dp"
+            android:ellipsize="end"
+            android:textSize="16sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/topic_item_node_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topic_item_title"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/topic_item_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topic_item_title"
+            android:layout_toEndOf="@id/topic_item_node_title"
+            android:layout_toRightOf="@id/topic_item_node_title"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/topic_item_create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/topic_item_title"
+            android:gravity="end"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/topic_item_reply_count"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:gravity="center"
+        android:textSize="16sp" />
+</android.support.v7.widget.CardView>

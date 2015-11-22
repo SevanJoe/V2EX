@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.sevanjoe.v2ex.R;
+import com.sevanjoe.v2ex.bean.Member;
 import com.sevanjoe.v2ex.bean.Topic;
 import com.sevanjoe.v2ex.network.NetworkManager;
 import com.sevanjoe.v2ex.network.NetworkUtils;
@@ -42,9 +43,15 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.avatarImageView.setImageUrl(NetworkUtils.getImageUrl(topicList.get(position).getMember().getAvatar_normal()),
+        Topic topic = topicList.get(position);
+        Member member = topic.getMember();
+        holder.avatarImageView.setImageUrl(NetworkUtils.getImageUrl(member.getAvatar_normal()),
                 NetworkManager.getInstance().getImageLoader());
-        holder.textView.setText(topicList.get(position).getTitle());
+        holder.tileTextView.setText(topic.getTitle());
+        holder.nodeTitleTextView.setText(topic.getNode().getTitle());
+        holder.authorNameTextView.setText(member.getUsername());
+        holder.createTimeTextView.setText(String.valueOf(topic.getCreated()));
+        holder.replyCountTextView.setText(String.valueOf(topic.getReplies()));
     }
 
     @Override
@@ -57,7 +64,19 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         NetworkImageView avatarImageView;
 
         @Bind(R.id.topic_item_title)
-        TextView textView;
+        TextView tileTextView;
+
+        @Bind(R.id.topic_item_node_title)
+        TextView nodeTitleTextView;
+
+        @Bind(R.id.topic_item_author_name)
+        TextView authorNameTextView;
+
+        @Bind(R.id.topic_item_create_time)
+        TextView createTimeTextView;
+
+        @Bind(R.id.topic_item_reply_count)
+        TextView replyCountTextView;
 
         public ViewHolder(View view) {
             super(view);
