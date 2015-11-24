@@ -13,6 +13,6 @@ public class V2EXApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        NetworkManager.getInstance().init(getApplicationContext());
+        NetworkManager.getInstance().init();
     }
 }

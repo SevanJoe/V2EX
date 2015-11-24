@@ -7,6 +7,8 @@ import com.sevanjoe.v2ex.presenter.MainPresenter;
 import com.sevanjoe.v2ex.presenter.OnLoadTopicListener;
 import com.sevanjoe.v2ex.ui.view.MainView;
 
+import java.util.List;
+
 /**
  * Created by Sevan on 2015/11/19.
  */
@@ -25,9 +27,9 @@ public class MainPresenterImpl implements MainPresenter, OnLoadTopicListener {
     }
 
     @Override
-    public void onLoadTopicSuccess(Topic[] topics) {
+    public void onLoadTopicSuccess(List<Topic> topicList) {
         this.mainView.loadSuccess();
-        this.mainView.showHotTopics(topics);
+        this.mainView.showHotTopics(topicList);
     }
 
     @Override

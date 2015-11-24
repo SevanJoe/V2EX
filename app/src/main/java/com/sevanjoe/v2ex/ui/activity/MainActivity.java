@@ -25,7 +25,6 @@ import com.sevanjoe.v2ex.ui.adapter.TopicAdapter;
 import com.sevanjoe.v2ex.ui.view.MainView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -52,8 +51,6 @@ public class MainActivity extends AppCompatActivity
 
     private TopicAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
-    private List<Topic> topicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +97,7 @@ public class MainActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        topicList = new ArrayList<>();
-        adapter = new TopicAdapter(topicList);
+        adapter = new TopicAdapter(this, new ArrayList<Topic>());
         recyclerView.setAdapter(adapter);
     }
 
@@ -175,9 +171,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void showHotTopics(Topic[] topics) {
-        topicList.clear();
-        Collections.addAll(topicList, topics);
+    public void showHotTopics(List<Topic> topicList) {
         adapter.setTopicList(topicList);
     }
 
