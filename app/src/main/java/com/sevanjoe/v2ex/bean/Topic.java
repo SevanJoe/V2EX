@@ -1,9 +1,12 @@
 package com.sevanjoe.v2ex.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Sevan on 2015/11/18.
  */
-public class Topic {
+public class Topic implements Parcelable {
     /**
      * id : 237001
      * title : 找了个女朋友后感觉没时间看书写代码了，怎么办
@@ -50,6 +53,30 @@ public class Topic {
     private int created;
     private int last_modified;
     private int last_touched;
+
+    protected Topic(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        url = in.readString();
+        content = in.readString();
+        content_rendered = in.readString();
+        replies = in.readInt();
+        created = in.readInt();
+        last_modified = in.readInt();
+        last_touched = in.readInt();
+    }
+
+    public static final Creator<Topic> CREATOR = new Creator<Topic>() {
+        @Override
+        public Topic createFromParcel(Parcel in) {
+            return new Topic(in);
+        }
+
+        @Override
+        public Topic[] newArray(int size) {
+            return new Topic[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -139,4 +166,21 @@ public class Topic {
         this.last_touched = last_touched;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(url);
+        dest.writeString(content);
+        dest.writeString(content_rendered);
+        dest.writeInt(replies);
+        dest.writeInt(created);
+        dest.writeInt(last_modified);
+        dest.writeInt(last_touched);
+    }
 }

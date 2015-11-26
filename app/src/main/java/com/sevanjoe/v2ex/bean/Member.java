@@ -1,15 +1,39 @@
 package com.sevanjoe.v2ex.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Sevan on 2015/11/18.
  */
-public class Member {
+public class Member implements Parcelable {
     private int id;
     private String username;
     private String tagline;
     private String avatar_mini;
     private String avatar_normal;
     private String avatar_large;
+
+    protected Member(Parcel in) {
+        id = in.readInt();
+        username = in.readString();
+        tagline = in.readString();
+        avatar_mini = in.readString();
+        avatar_normal = in.readString();
+        avatar_large = in.readString();
+    }
+
+    public static final Creator<Member> CREATOR = new Creator<Member>() {
+        @Override
+        public Member createFromParcel(Parcel in) {
+            return new Member(in);
+        }
+
+        @Override
+        public Member[] newArray(int size) {
+            return new Member[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -57,5 +81,20 @@ public class Member {
 
     public void setAvatar_large(String avatar_large) {
         this.avatar_large = avatar_large;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(username);
+        dest.writeString(tagline);
+        dest.writeString(avatar_mini);
+        dest.writeString(avatar_normal);
+        dest.writeString(avatar_large);
     }
 }

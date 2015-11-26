@@ -1,9 +1,12 @@
 package com.sevanjoe.v2ex.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Sevan on 2015/11/18.
  */
-public class Node {
+public class Node implements Parcelable {
     private int id;
     private String name;
     private String title;
@@ -13,6 +16,30 @@ public class Node {
     private String avatar_mini;
     private String avatar_normal;
     private String avatar_large;
+
+    protected Node(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        title = in.readString();
+        title_alternative = in.readString();
+        url = in.readString();
+        topics = in.readInt();
+        avatar_mini = in.readString();
+        avatar_normal = in.readString();
+        avatar_large = in.readString();
+    }
+
+    public static final Creator<Node> CREATOR = new Creator<Node>() {
+        @Override
+        public Node createFromParcel(Parcel in) {
+            return new Node(in);
+        }
+
+        @Override
+        public Node[] newArray(int size) {
+            return new Node[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -84,5 +111,23 @@ public class Node {
 
     public void setAvatar_large(String avatar_large) {
         this.avatar_large = avatar_large;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(title);
+        dest.writeString(title_alternative);
+        dest.writeString(url);
+        dest.writeInt(topics);
+        dest.writeString(avatar_mini);
+        dest.writeString(avatar_normal);
+        dest.writeString(avatar_large);
     }
 }

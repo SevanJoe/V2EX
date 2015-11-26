@@ -62,6 +62,10 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         return topicList.size();
     }
 
+    public Topic getItemData(int position) {
+        return topicList.get(position);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.topic_item_avatar)
         ImageView avatarImageView;
