@@ -7,9 +7,10 @@ import com.sevanjoe.v2ex.presenter.OnLoadTopicListener;
 
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Retrofit;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Sevan on 2015/11/19.
@@ -17,17 +18,19 @@ import retrofit.Retrofit;
 public class TopicModelImpl implements TopicModel {
     @Override
     public void loadHotTopics(final OnLoadTopicListener onLoadTopicListener) {
-        Call<List<Topic>> call = NetworkManager.getInstance().getApiService().loadHotTopics();
-        call.enqueue(new Callback<List<Topic>>() {
-            @Override
-            public void onResponse(retrofit.Response<List<Topic>> response, Retrofit retrofit) {
-                onLoadTopicListener.onLoadTopicSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                onLoadTopicListener.onLoadTopicFailed();
-            }
-        });
+        Observable<List<Topic>> hotTopics = NetworkManager.getInstance().getApiService().loadHotTopics();
+        hotTopics.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Topic>>() {
+                    @Override
+                    public void call(List<Topic> topics) {
+                        onLoadTopicListener.onLoadTopicSuccess(topics);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        onLoadTopicListener.onLoadTopicFailed();
+                    }
+                });
     }
 }

@@ -4,8 +4,8 @@ import com.sevanjoe.v2ex.bean.Topic;
 
 import java.util.List;
 
-import retrofit.Call;
 import retrofit.http.GET;
+import rx.Observable;
 
 /**
  * Created by Sevan on 2015/11/24.
@@ -13,5 +13,5 @@ import retrofit.http.GET;
 public interface V2EXApiService {
 
     @GET("topics/hot.json")
-    Call<List<Topic>> loadHotTopics();
+    Observable<List<Topic>> loadHotTopics();
 }
