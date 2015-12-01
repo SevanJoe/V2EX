@@ -99,15 +99,6 @@ public class MainActivity extends AppCompatActivity
 
         adapter = new TopicAdapter(this, new ArrayList<Topic>());
         recyclerView.setAdapter(adapter);
-
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = recyclerView.getChildAdapterPosition(v);
-                Topic topic = adapter.getItemData(position);
-                TopicActivity.start(getParent(), topic);
-            }
-        });
     }
 
     private void initPresenter() {

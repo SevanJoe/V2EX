@@ -12,6 +12,7 @@ import com.sevanjoe.v2ex.R;
 import com.sevanjoe.v2ex.bean.Member;
 import com.sevanjoe.v2ex.bean.Topic;
 import com.sevanjoe.v2ex.network.NetworkUtils;
+import com.sevanjoe.v2ex.ui.activity.TopicActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Topic topic = topicList.get(position);
+        final Topic topic = topicList.get(position);
         Member member = topic.getMember();
         Picasso.with(context).load(NetworkUtils.getImageUrl(member.getAvatar_normal())).into(holder.avatarImageView);
         holder.tileTextView.setText(topic.getTitle());
@@ -55,15 +56,18 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         holder.authorNameTextView.setText(member.getUsername());
         holder.createTimeTextView.setText(String.valueOf(topic.getCreated()));
         holder.replyCountTextView.setText(String.valueOf(topic.getReplies()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TopicActivity.start(context, topic);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return topicList.size();
-    }
-
-    public Topic getItemData(int position) {
-        return topicList.get(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
